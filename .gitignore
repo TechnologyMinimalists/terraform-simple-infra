@@ -1,0 +1,22 @@
+#  Local .terraform directories
+**/.terraform/*
+
+# .tfstate files
+*.tfstate
+*.tfstate.*
+
+# .tfplan files
+*.tfplan
+*.tfplan.*
+
+# .tfvars files
+*.tfvars
+*.tfvars*
+
+
+# ide
+.idea
+
+# vim temporary files
+*.swp
+environment

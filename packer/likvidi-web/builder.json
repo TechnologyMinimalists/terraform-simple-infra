@@ -1,0 +1,46 @@
+{
+  "variables": {
+        "aws_profile": "{{env `AWS_PROFILE`}}",
+        "region":         "eu-central-1"
+  },
+  "builders": [{
+    "type": "amazon-ebs",
+    "profile": "{{user `aws_profile`}}",
+    "region": "{{ user `region` }}",
+    "source_ami_filter": {
+      "filters": {
+        "virtualization-type": "hvm",
+        "name": "ubuntu/images/*ubuntu-bionic-18.04-amd64-server-*",
+        "root-device-type": "ebs"
+      },
+      "owners": ["099720109477"],
+      "most_recent": true
+    },
+    "instance_type": "t2.micro",
+    "ssh_username": "ubuntu",
+    "ami_name": "ubuntu 18.04 with docker {{timestamp}}"
+  }],
+  "provisioners": [
+    {
+      "type": "file",
+      "source": "files/nginx.conf",
+      "destination": "/tmp/nginx.conf"
+    },
+    {
+      "type": "file",
+      "source": "files/docker-compose.yml",
+      "destination": "/tmp/docker-compose.yml"
+    },
+    {
+      "type": "file",
+      "source": "files/Dockerfile",
+      "destination": "/tmp/Dockerfile"
+    },
+    {
+     "type": "shell",
+     "scripts": [
+        "files/install_updates.sh"
+        ]
+    }
+  ]
+}
